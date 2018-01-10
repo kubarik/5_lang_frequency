@@ -1,7 +1,45 @@
-# Frequency Analysis of Words
+# Частота слов
 
-[TODO. There will be project description]
+Скрипт принимает на вход путь до текстового файла и выводит в консоль десять
+самых популярных слов в этом файле в порядке убывания частоты.
 
-# Project Goals
+# Как использовать
 
-The code is written for educational purposes. Training course for web-developers - [DEVMAN.org](https://devman.org)
+Загружаем текст:
+```python
+load_data(filepath)
+```
+где
+  filepath - путь до файла с текстом.
+
+Для подсчета слов используется рекурсия в функции:
+```python
+get_most_frequent_words(text)
+```
+где
+  text - текст, по которому собирается статистика использование слов.
+
+Импортируемые модули
+```python
+import sys #доступ к переменным
+```
+
+```bash
+
+Запус и ответ
+$ python lang_frequency.py test.txt
+и 41
+в 20
+на 20
+он 18
+его 14
+не 14
+с 11
+как 8
+что 6
+ему 6
+```
+
+# Цели проекта
+
+Код создан в учебных целях. В рамках учебного курса по веб-разработке ― [DEVMAN.org](https://devman.org)
