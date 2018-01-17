@@ -1,66 +1,42 @@
+import io
+import collections
+import operator
 import re
 import sys
 
-result = {}
+
+total_words_count = {}
 
 
-def load_data(filepath):
+def load_data(file_path):
     try:
-        file_handler = open(filepath, 'r')
-        try:
-            for line in file_handler:
-                get_most_frequent_words(line)
-        finally:
-            file_handler.close()
-    except OSError as ex:
-        print("Не могу прочитать файл", filepath, ": Ошибка ", ex)
+        with io.open(file_path, encoding='utf-8') as file_handler:
+            for line_text in file_handler:
+                words_count = get_words_count(line_text)
+                save_count_word(words_count)
+    except OSError:
+        return False
 
 
-def get_most_frequent_words(text):
-    global result
-    regex = r'^[\w\d]*$'
-    if text.strip() == '':
-        return
-
-    punctuation_marks = ['.', '?', '!']
-    pos = -1
-    for marks in punctuation_marks:
-        pos = text.find(marks)
-        if pos != -1:
-            break
-
-    if pos == -1:
-        pos = len(text)
-
-    str_part = text[:pos]
-    str_part = str_part.lower().strip()
-    pos += 1
-    if str_part == '':
-        pos = pos + len(str_part)
-    else:
-        for word in str_part.split(' '):
-            if not re.match(regex, word):
-                continue
-            numerator = result.get(word)
-            numerator = 1 if numerator is None else numerator+1
-            result[word] = numerator
-
-    return get_most_frequent_words(text[pos:])
+def get_words_count(text):
+    words = re.findall(r'\w+', text.lower().strip())
+    return collections.Counter(words).items()
 
 
-def output_frequent_words():
-    global result
-    result = sorted(result.items(), key=lambda x: x[1], reverse=True)
-    result = dict((k, v) for k, v in result[:10] if v > 1)
-    for key, value in result.items():
-        print(key, value)
+def save_count_word(words_count):
+    global total_words_count
+    for word in words_count:
+        total = total_words_count.get(word[0])
+        total_words_count[word[0]] = total+word[1] if total is not None else word[1]
 
 
 if __name__ == '__main__':
     if len(sys.argv) < 2:
-        print('Не указан файл')
-        sys.exit()
+        sys.exit('Не указан файл')
 
-    filepath = sys.argv[1]
-    load_data(filepath)
-    output_frequent_words()
+    input_file_path = sys.argv[1]
+    load_data(input_file_path)
+    if len(total_words_count):
+        total_words_count_sorted = sorted(total_words_count.items(), key=operator.itemgetter(1), reverse=True)
+        for word, count in total_words_count_sorted[:10]:
+            print(word, count)
