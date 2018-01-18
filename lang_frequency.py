@@ -3,6 +3,9 @@ import re
 import sys
 
 
+MOST_COMMON_ELEMENTS = 10
+
+
 def load_data(file_path):
     try:
         with open(file_path, encoding='utf8') as file_handler:
@@ -13,7 +16,7 @@ def load_data(file_path):
 
 def get_most_frequent_words(text):
     words = re.findall(r'\w+', text.lower().strip())
-    return collections.Counter(words).most_common(10)
+    return collections.Counter(words).most_common(MOST_COMMON_ELEMENTS)
 
 
 if __name__ == '__main__':
