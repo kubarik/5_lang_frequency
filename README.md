@@ -21,10 +21,11 @@ load_data(file_path)
 
 Определение частоты слов происходит с помощью специального типа **Counter**, в функции:
 ```python
-get_most_frequent_words(text)
+get_most_frequent_words(text, limit_words)
 ```
 где
-  text - текст, по которому собирается статистика использование слов.
+  text - текст, по которому собирается статистика использование слов
+  limit_words - количество выводимых слов
 
 ```bash
 
