@@ -43,6 +43,4 @@ $ python lang_frequency.py test.txt
 ему 6
 ```
 
-# Цели проекта
 
-Код создан в учебных целях. В рамках учебного курса по веб-разработке ― [DEVMAN.org](https://devman.org)
